@@ -17,6 +17,7 @@ namespace MVCForTests.Controllers
         // GET: Employees
         public ActionResult Index()
         {
+            ViewBag.Employees = "List of Employees";
             return View(db.Employees.ToList());
         }
 
