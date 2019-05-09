@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace MVCForTests.Tests.Controllers
 {
@@ -24,6 +25,20 @@ namespace MVCForTests.Tests.Controllers
         {
             _employeesController.Index();
             Assert.That(_employeesController.ViewBag.Employees, Is.EqualTo("List of Employees"));
+        }
+
+        [Test]
+        public void Index_WhenCalled_ReturnsViewResult()
+        {
+            var result = _employeesController.Index();
+            Assert.That(result, Is.TypeOf(typeof(ViewResult)));
+        }
+
+        [Test]
+        public void Details_WhenCalled_ReturnsViewResult()
+        {
+            var result = _employeesController.Details(1) as ViewResult;
+            Assert.That(result.ViewName, Is.EqualTo("Details"));
         }
     }
 }
