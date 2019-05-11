@@ -6,19 +6,30 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using MVCForTests.EmployeeRepository;
 using MVCForTests.Models;
+using MVCForTests.RepositoryContracts;
 
 namespace MVCForTests.Controllers
 {
     public class EmployeesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private IEmployeeRepo _repository;
+        public EmployeesController()
+        {
+
+        }
+        public EmployeesController(EmployeeRepo repository)
+        {
+            _repository = repository;
+        }
 
         // GET: Employees
         public ActionResult Index()
         {
             ViewBag.Employees = "List of Employees";
-            return View(db.Employees.ToList());
+            return View(_repository.GetEmployees());
         }
 
         // GET: Employees/Details/5
