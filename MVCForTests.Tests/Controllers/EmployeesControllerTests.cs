@@ -1,4 +1,7 @@
-﻿using MVCForTests.Controllers;
+﻿using Moq;
+using MVCForTests.Controllers;
+using MVCForTests.Models;
+using MVCForTests.RepositoryContracts;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -13,11 +16,12 @@ namespace MVCForTests.Tests.Controllers
     public class EmployeesControllerTests
     {
         private MVCForTests.Controllers.EmployeesController _employeesController;
+        private Mock<IEmployeeRepo> _employeeRepo=new Mock<IEmployeeRepo>();
 
         [SetUp]
         public void Setup()
         {
-            _employeesController = new MVCForTests.Controllers.EmployeesController();
+            _employeesController = new EmployeesController(_employeeRepo.Object);
         }
 
         [Test]
@@ -31,14 +35,15 @@ namespace MVCForTests.Tests.Controllers
         public void Index_WhenCalled_ReturnsViewResult()
         {
             var result = _employeesController.Index();
-            Assert.That(result, Is.TypeOf(typeof(ViewResult)));
+            Assert.That(result, Is.TypeOf<ViewResult>());
         }
 
         [Test]
         public void Details_WhenCalled_ReturnsViewResult()
         {
+            _employeeRepo.Setup(e => e.GetEmployee(1)).Returns(new Employee());
             var result = _employeesController.Details(1) as ViewResult;
-            Assert.That(result.ViewName, Is.EqualTo("Details"));
+            Assert.That(result, Is.TypeOf<ViewResult>());
         }
     }
 }

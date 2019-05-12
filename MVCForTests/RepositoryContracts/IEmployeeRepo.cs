@@ -10,7 +10,7 @@ namespace MVCForTests.RepositoryContracts
     public interface IEmployeeRepo
     {
         List<Employee> GetEmployees();
-        Employee GetEmployee(int id);
+        Employee GetEmployee(int? id);
         void InsertEmployee(Employee employee);
         void UpdateEmployee(Employee employee);
         void DeleteEmployee(int id);

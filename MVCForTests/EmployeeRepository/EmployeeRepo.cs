@@ -14,9 +14,9 @@ namespace MVCForTests.EmployeeRepository
         {
             return db.Employees.ToList();
         }
-        public Employee GetEmployee(int id)
+        public Employee GetEmployee(int? id)
         {
-            return db.Employees.FirstOrDefault(e => e.Id.Equals(id));
+            return db.Employees.FirstOrDefault(e => e.Id.Equals(id.Value));
         }
 
         public void InsertEmployee(Employee employee)

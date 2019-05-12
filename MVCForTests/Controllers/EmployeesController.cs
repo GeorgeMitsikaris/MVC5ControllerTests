@@ -20,7 +20,7 @@ namespace MVCForTests.Controllers
         {
 
         }
-        public EmployeesController(EmployeeRepo repository)
+        public EmployeesController(IEmployeeRepo repository)
         {
             _repository = repository;
         }
@@ -39,7 +39,7 @@ namespace MVCForTests.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = db.Employees.Find(id);
+            Employee employee = _repository.GetEmployee(id.Value);
             if (employee == null)
             {
                 return HttpNotFound();
