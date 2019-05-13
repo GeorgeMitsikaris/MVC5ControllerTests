@@ -45,5 +45,19 @@ namespace MVCForTests.Tests.Controllers
             var result = _employeesController.Details(1) as ViewResult;
             Assert.That(result, Is.TypeOf<ViewResult>());
         }
+
+        [Test]
+        public void Details_IdIsNull_HttpStatusCodeResult()
+        {
+            var result = _employeesController.Details(null) as HttpStatusCodeResult;
+            Assert.That(result, Is.TypeOf<HttpStatusCodeResult>());
+        }
+
+        [Test]
+        public void Create_WhenCalled_ReturnsViewResult()
+        {
+            var result = _employeesController.Create() as ViewResult;
+            Assert.That(result, Is.TypeOf<ViewResult>());
+        }
     }
 }

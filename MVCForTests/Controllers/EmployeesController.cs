@@ -62,7 +62,7 @@ namespace MVCForTests.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Employees.Add(employee);
+                _repository.InsertEmployee(employee);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
