@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -51,6 +52,13 @@ namespace MVCForTests.Tests.Controllers
         {
             var result = _employeesController.Details(null) as HttpStatusCodeResult;
             Assert.That(result, Is.TypeOf<HttpStatusCodeResult>());
+        }
+
+        [Test]
+        public void Details_IdIsNull_StatusCodeIs400()
+        {
+            var result = _employeesController.Details(null) as HttpStatusCodeResult;
+            Assert.That(result.StatusCode, Is.EqualTo(400));
         }
 
         [Test]
