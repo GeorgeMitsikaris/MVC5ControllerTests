@@ -77,7 +77,7 @@ namespace MVCForTests.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = db.Employees.Find(id);
+            Employee employee = _repository.GetEmployee(id);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -94,7 +94,7 @@ namespace MVCForTests.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(employee).State = EntityState.Modified;
+                _repository.UpdateEmployee(employee);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -108,7 +108,7 @@ namespace MVCForTests.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = db.Employees.Find(id);
+            Employee employee = _repository.GetEmployee(id);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -121,8 +121,7 @@ namespace MVCForTests.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Employee employee = db.Employees.Find(id);
-            db.Employees.Remove(employee);
+            _repository.DeleteEmployee(id);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
