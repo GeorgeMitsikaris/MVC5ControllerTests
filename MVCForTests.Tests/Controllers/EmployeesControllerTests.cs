@@ -48,10 +48,18 @@ namespace MVCForTests.Tests.Controllers
         }
 
         [Test]
-        public void Details_IdIsNull_HttpStatusCodeResult()
+        public void Details_IdIsNull_ReturnsHttpStatusCodeResult()
         {
             var result = _employeesController.Details(null) as HttpStatusCodeResult;
             Assert.That(result, Is.TypeOf<HttpStatusCodeResult>());
+        }
+
+        [Test]
+        public void Details_EmployeeIsNull_ReturnsHttpNotFound()
+        {
+            var result = _employeesController.Details(-1);
+            var employee = _employeeRepo.Setup(e => e.GetEmployee(-1)).Returns(() => null);
+            Assert.That(result, Is.TypeOf<HttpNotFoundResult>());
         }
 
         [Test]
