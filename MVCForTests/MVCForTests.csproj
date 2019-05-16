@@ -200,6 +200,10 @@
     <Compile Include="Migrations\201905071409240_CreatingEmployeesTable.Designer.cs">
       <DependentUpon>201905071409240_CreatingEmployeesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905161258551_MakingFirstNameLatNameEmailNotNullToEmployeesTable.cs" />
+    <Compile Include="Migrations\201905161258551_MakingFirstNameLatNameEmailNotNullToEmployeesTable.Designer.cs">
+      <DependentUpon>201905161258551_MakingFirstNameLatNameEmailNotNullToEmployeesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -291,6 +295,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905071409240_CreatingEmployeesTable.resx">
       <DependentUpon>201905071409240_CreatingEmployeesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905161258551_MakingFirstNameLatNameEmailNotNullToEmployeesTable.resx">
+      <DependentUpon>201905161258551_MakingFirstNameLatNameEmailNotNullToEmployeesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
