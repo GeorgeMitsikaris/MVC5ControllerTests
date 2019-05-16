@@ -18,11 +18,13 @@ namespace MVCForTests.Tests.Controllers
     {
         private MVCForTests.Controllers.EmployeesController _employeesController;
         private Mock<IEmployeeRepo> _employeeRepo=new Mock<IEmployeeRepo>();
+        Employee employee;
 
         [SetUp]
         public void Setup()
         {
             _employeesController = new EmployeesController(_employeeRepo.Object);
+            employee= new Employee { Id=1, FirstName="a",LastName="b",Gender="c",Email="a@b.c"};
         }
 
         [Test]
@@ -74,6 +76,14 @@ namespace MVCForTests.Tests.Controllers
         {
             var result = _employeesController.Create() as ViewResult;
             Assert.That(result, Is.TypeOf<ViewResult>());
+        }
+
+        [Test]
+        public void Create_WhenModelStateIsValid_RedirectsToIndex()
+        {
+            var result = _employeesController.Create(employee);
+            var rootResult = (RedirectToRouteResult)result;
+            Assert.That(rootResult.RouteValues["action"], Is.EqualTo("Index"));
         }
     }
 }
