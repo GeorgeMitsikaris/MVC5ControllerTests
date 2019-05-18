@@ -112,5 +112,13 @@ namespace MVCForTests.Tests.Controllers
 
             Assert.That(result.ViewData.ModelState.IsValid, Is.False);
         }
+
+        [Test]
+        public void Edit_WhenCalled_ReturnsViewResult()
+        {
+            _employeeRepo.Setup(e => e.GetEmployee(1)).Returns(employee);
+            var result = _employeesController.Edit(1) as ViewResult;
+            Assert.That(result, Is.TypeOf<ViewResult>());
+        }
     }
 }
