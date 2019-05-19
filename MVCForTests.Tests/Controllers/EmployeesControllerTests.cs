@@ -120,5 +120,13 @@ namespace MVCForTests.Tests.Controllers
             var result = _employeesController.Edit(1) as ViewResult;
             Assert.That(result, Is.TypeOf<ViewResult>());
         }
+
+        [Test]
+        public void Edit_WhenSucceeds_RedirectsToIndex()
+        {
+            var result = _employeesController.Edit(employee);
+            var rootResult = (RedirectToRouteResult)result;
+            Assert.That(rootResult.RouteValues["action"], Is.EqualTo("Index"));
+        }
     }
 }
