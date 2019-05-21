@@ -57,18 +57,18 @@ namespace MVCForTests.Tests.Controllers
         }
 
         [Test]
+        public void Details_IdIsNull_StatusCodeIs400()
+        {
+            var result = _employeesController.Details(null) as HttpStatusCodeResult;
+            Assert.That(result.StatusCode, Is.EqualTo(400));
+        }
+
+        [Test]
         public void Details_EmployeeIsNull_ReturnsHttpNotFound()
         {
             var result = _employeesController.Details(-1);
             var employee = _employeeRepo.Setup(e => e.GetEmployee(-1)).Returns(() => null);
             Assert.That(result, Is.TypeOf<HttpNotFoundResult>());
-        }
-
-        [Test]
-        public void Details_IdIsNull_StatusCodeIs400()
-        {
-            var result = _employeesController.Details(null) as HttpStatusCodeResult;
-            Assert.That(result.StatusCode, Is.EqualTo(400));
         }
 
         [Test]
@@ -126,6 +126,20 @@ namespace MVCForTests.Tests.Controllers
             _employeeRepo.Setup(e => e.GetEmployee(1)).Returns(employee);
             var result = _employeesController.Edit(1) as ViewResult;
             Assert.That(result, Is.TypeOf<ViewResult>());
+        }
+
+        [Test]
+        public void Edit_IdIsNull_ReturnsHttpStatusCodeResult()
+        {
+            var result = _employeesController.Edit((int?)null) as HttpStatusCodeResult;
+            Assert.That(result, Is.TypeOf<HttpStatusCodeResult>());
+        }
+
+        [Test]
+        public void Edit_IdIsNull_StatusCodeIs400()
+        {
+            var result = _employeesController.Edit((int?)null) as HttpStatusCodeResult;
+            Assert.That(result.StatusCode, Is.EqualTo(400));
         }
 
         [Test]
