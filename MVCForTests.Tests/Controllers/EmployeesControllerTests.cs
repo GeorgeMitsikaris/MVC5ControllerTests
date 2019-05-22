@@ -136,6 +136,14 @@ namespace MVCForTests.Tests.Controllers
         }
 
         [Test]
+        public void Edit_EmployeeIsNull_ReturnsHttpNotFound()
+        {
+            _employeeRepo.Setup(e => e.GetEmployee(It.IsAny<int>())).Returns(() => null);
+            var result = _employeesController.Edit(It.IsAny<int>()) as HttpStatusCodeResult;
+            Assert.That(result, Is.TypeOf<HttpNotFoundResult>());
+        }
+
+        [Test]
         public void Edit_IdIsNull_StatusCodeIs400()
         {
             var result = _employeesController.Edit((int?)null) as HttpStatusCodeResult;
@@ -153,8 +161,16 @@ namespace MVCForTests.Tests.Controllers
         [Test]
         public void Edit_WhenModelStateIsValid_ReturnsRedirectToRouteResult()
         {
-            var result = _employeesController.Edit(employee);
+            var result = _employeesController.Edit(It.IsAny<Employee>());
             Assert.That(result, Is.TypeOf<RedirectToRouteResult>());
+        }
+
+        [Test]
+        public void Edit_WhenModelStateIsValid_RedirectsToIndex()
+        {
+            var result = _employeesController.Edit(It.IsAny<Employee>());
+            var rootResult = result as RedirectToRouteResult;
+            Assert.That(rootResult.RouteValues["action"], Is.EqualTo("Index"));
         }
     }
 }
