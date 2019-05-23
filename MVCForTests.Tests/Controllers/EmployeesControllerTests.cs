@@ -172,5 +172,29 @@ namespace MVCForTests.Tests.Controllers
             var rootResult = result as RedirectToRouteResult;
             Assert.That(rootResult.RouteValues["action"], Is.EqualTo("Index"));
         }
+
+        [Test]
+        public void Edit_WhenModelStateIsInValid_ViewNameIsEmptyString()
+        {
+            _employeesController.ModelState.AddModelError("EditError", "Mock error message");
+            var result = _employeesController.Edit(It.IsAny<Employee>()) as ViewResult;
+            Assert.That(result.ViewName, Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public void Edit_WhenModelStateIsInValid_ViewResultIsNotNull()
+        {
+            _employeesController.ModelState.AddModelError("EditError", "Mock error message");
+            var result = _employeesController.Edit(It.IsAny<Employee>()) as ViewResult;
+            Assert.That(result, Is.Not.Null);
+        }
+
+        [Test]
+        public void Edit_WhenModelStateIsInValid_ModelStateReturnsFalse()
+        {
+            _employeesController.ModelState.AddModelError("EditError", "Mock error message");
+            var result = _employeesController.Edit(It.IsAny<Employee>()) as ViewResult;
+            Assert.That(result.ViewData.ModelState.IsValid, Is.False);
+        }
     }
 }
