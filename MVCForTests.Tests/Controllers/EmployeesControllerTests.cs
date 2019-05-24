@@ -196,5 +196,19 @@ namespace MVCForTests.Tests.Controllers
             var result = _employeesController.Edit(It.IsAny<Employee>()) as ViewResult;
             Assert.That(result.ViewData.ModelState.IsValid, Is.False);
         }
+
+        [Test]
+        public void Delete_IdIsNull_ReturnsHttpStatusCodeResult()
+        {
+            var result = _employeesController.Delete((int?)null) as HttpStatusCodeResult;
+            Assert.That(result, Is.TypeOf<HttpStatusCodeResult>());
+        }
+
+        [Test]
+        public void Delete_IdIsNull_StatusCodeIs400()
+        {
+            var result = _employeesController.Delete((int?)null) as HttpStatusCodeResult;
+            Assert.That(result.StatusCode, Is.EqualTo(400));
+        }
     }
 }
