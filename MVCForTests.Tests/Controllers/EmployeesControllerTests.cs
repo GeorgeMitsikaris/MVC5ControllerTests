@@ -66,7 +66,7 @@ namespace MVCForTests.Tests.Controllers
         [Test]
         public void Details_EmployeeIsNull_ReturnsHttpNotFound()
         {
-            var result = _employeesController.Details(-1);
+            var result = _employeesController.Details(It.IsAny<int>());
             var employee = _employeeRepo.Setup(e => e.GetEmployee(-1)).Returns(() => null);
             Assert.That(result, Is.TypeOf<HttpNotFoundResult>());
         }
@@ -123,8 +123,8 @@ namespace MVCForTests.Tests.Controllers
         [Test]
         public void Edit_WhenCalled_ReturnsViewResult()
         {
-            _employeeRepo.Setup(e => e.GetEmployee(1)).Returns(employee);
-            var result = _employeesController.Edit(1) as ViewResult;
+            _employeeRepo.Setup(e => e.GetEmployee(It.IsAny<int>())).Returns(employee);
+            var result = _employeesController.Edit(It.IsAny<int>()) as ViewResult;
             Assert.That(result, Is.TypeOf<ViewResult>());
         }
 
@@ -138,7 +138,6 @@ namespace MVCForTests.Tests.Controllers
         [Test]
         public void Edit_EmployeeIsNull_ReturnsHttpNotFound()
         {
-            _employeeRepo.Setup(e => e.GetEmployee(It.IsAny<int>())).Returns(() => null);
             var result = _employeesController.Edit(It.IsAny<int>()) as HttpStatusCodeResult;
             Assert.That(result, Is.TypeOf<HttpNotFoundResult>());
         }
@@ -209,6 +208,21 @@ namespace MVCForTests.Tests.Controllers
         {
             var result = _employeesController.Delete((int?)null) as HttpStatusCodeResult;
             Assert.That(result.StatusCode, Is.EqualTo(400));
+        }
+
+        [Test]
+        public void Delete_EmployeeIsNull_ReturnsHttpNotFound()
+        {
+            var result = _employeesController.Delete(It.IsAny<int>()) as HttpStatusCodeResult;
+            Assert.That(result, Is.TypeOf<HttpNotFoundResult>());
+        }
+
+        [Test]
+        public void Delete_WhenCalled_ReturnsViewResult()
+        {
+            _employeeRepo.Setup(e => e.GetEmployee(It.IsAny<int>())).Returns(employee);
+            var result = _employeesController.Delete(It.IsAny<int>()) as ViewResult;
+            Assert.That(result, Is.TypeOf<ViewResult>());
         }
     }
 }
