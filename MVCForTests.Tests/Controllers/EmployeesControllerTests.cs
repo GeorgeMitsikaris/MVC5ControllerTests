@@ -44,8 +44,8 @@ namespace MVCForTests.Tests.Controllers
         [Test]
         public void Details_WhenCalled_ReturnsViewResult()
         {
-            _employeeRepo.Setup(e => e.GetEmployee(1)).Returns(new Employee());
-            var result = _employeesController.Details(1) as ViewResult;
+            _employeeRepo.Setup(e => e.GetEmployee(It.IsAny<int>())).Returns(new Employee());
+            var result = _employeesController.Details(It.IsAny<int>()) as ViewResult;
             Assert.That(result, Is.TypeOf<ViewResult>());
         }
 
@@ -67,7 +67,7 @@ namespace MVCForTests.Tests.Controllers
         public void Details_EmployeeIsNull_ReturnsHttpNotFound()
         {
             var result = _employeesController.Details(It.IsAny<int>());
-            var employee = _employeeRepo.Setup(e => e.GetEmployee(-1)).Returns(() => null);
+            var employee = _employeeRepo.Setup(e => e.GetEmployee(It.IsAny<int>())).Returns(() => null);
             Assert.That(result, Is.TypeOf<HttpNotFoundResult>());
         }
 
@@ -81,7 +81,7 @@ namespace MVCForTests.Tests.Controllers
         [Test]
         public void Create_WhenModelStateIsValid_RedirectsToIndex()
         {
-            var result = _employeesController.Create(employee);
+            var result = _employeesController.Create(It.IsAny<Employee>());
             var rootResult = (RedirectToRouteResult)result;
             Assert.That(rootResult.RouteValues["action"], Is.EqualTo("Index"));
         }
@@ -89,7 +89,7 @@ namespace MVCForTests.Tests.Controllers
         [Test]
         public void Create_WhenModelStateIsValid_ReturnsRedirectToRouteResult()
         {
-            var result = _employeesController.Create(employee);
+            var result = _employeesController.Create(It.IsAny<Employee>());
             Assert.That(result, Is.TypeOf<RedirectToRouteResult>());
         }
 
@@ -152,7 +152,7 @@ namespace MVCForTests.Tests.Controllers
         [Test]
         public void Edit_WhenSucceeds_RedirectsToIndex()
         {
-            var result = _employeesController.Edit(employee);
+            var result = _employeesController.Edit(It.IsAny<Employee>());
             var rootResult = (RedirectToRouteResult)result;
             Assert.That(rootResult.RouteValues["action"], Is.EqualTo("Index"));
         }
@@ -220,9 +220,23 @@ namespace MVCForTests.Tests.Controllers
         [Test]
         public void Delete_WhenCalled_ReturnsViewResult()
         {
-            _employeeRepo.Setup(e => e.GetEmployee(It.IsAny<int>())).Returns(employee);
+            _employeeRepo.Setup(e => e.GetEmployee(It.IsAny<int>())).Returns(new Employee());
             var result = _employeesController.Delete(It.IsAny<int>()) as ViewResult;
             Assert.That(result, Is.TypeOf<ViewResult>());
+        }
+
+        [Test]
+        public void DeleteConfirmed_WhenCalled_RedirectsToIndex()
+        {
+            var rootResult = _employeesController.DeleteConfirmed(It.IsAny<int>()) as RedirectToRouteResult;
+            Assert.That(rootResult.RouteValues["action"], Is.EqualTo("Index"));
+        }
+
+        [Test]
+        public void DeleteConfirmed_WhenCalled_ReturnsRedirectsToRootResult()
+        {
+            var rootResult = _employeesController.DeleteConfirmed(It.IsAny<int>()) as RedirectToRouteResult;
+            Assert.That(rootResult, Is.TypeOf<RedirectToRouteResult>());
         }
     }
 }
