@@ -66,8 +66,8 @@ namespace MVCForTests.Tests.Controllers
         [Test]
         public void Details_EmployeeIsNull_ReturnsHttpNotFound()
         {
-            var result = _employeesController.Details(It.IsAny<int>());
             var employee = _employeeRepo.Setup(e => e.GetEmployee(It.IsAny<int>())).Returns(() => null);
+            var result = _employeesController.Details(It.IsAny<int>());
             Assert.That(result, Is.TypeOf<HttpNotFoundResult>());
         }
 
@@ -138,6 +138,7 @@ namespace MVCForTests.Tests.Controllers
         [Test]
         public void Edit_EmployeeIsNull_ReturnsHttpNotFound()
         {
+            var employee = _employeeRepo.Setup(e => e.GetEmployee(It.IsAny<int>())).Returns(() => null);
             var result = _employeesController.Edit(It.IsAny<int>()) as HttpStatusCodeResult;
             Assert.That(result, Is.TypeOf<HttpNotFoundResult>());
         }
