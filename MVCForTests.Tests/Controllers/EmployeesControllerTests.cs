@@ -94,6 +94,14 @@ namespace MVCForTests.Tests.Controllers
         }
 
         [Test]
+        public void Create_ModelStateIsInValid_ReturnsViewResult()
+        {
+            _employeesController.ModelState.AddModelError("Test", "My Custom Error");
+            var result = _employeesController.Create(It.IsAny<Employee>());
+            Assert.That(result, Is.TypeOf<ViewResult>());
+        }
+
+        [Test]
         public void Create_WhenModelStateIsInValid_ViewNameIsEmptyString()
         {
             _employeesController.ModelState.AddModelError("MyError", "Mock error message");
