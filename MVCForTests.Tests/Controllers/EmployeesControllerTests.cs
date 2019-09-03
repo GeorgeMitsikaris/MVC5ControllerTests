@@ -159,14 +159,6 @@ namespace MVCForTests.Tests.Controllers
         }
 
         [Test]
-        public void Edit_WhenSucceeds_RedirectsToIndex()
-        {
-            var result = _employeesController.Edit(It.IsAny<Employee>());
-            var rootResult = (RedirectToRouteResult)result;
-            Assert.That(rootResult.RouteValues["action"], Is.EqualTo("Index"));
-        }
-
-        [Test]
         public void Edit_WhenModelStateIsValid_ReturnsRedirectToRouteResult()
         {
             var result = _employeesController.Edit(It.IsAny<Employee>());
