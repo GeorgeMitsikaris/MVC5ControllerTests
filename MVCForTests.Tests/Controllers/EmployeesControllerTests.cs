@@ -222,7 +222,7 @@ namespace MVCForTests.Tests.Controllers
         public void Delete_WhenCalled_ReturnsViewResult()
         {
             _employeeRepo.Setup(e => e.GetEmployee(It.IsAny<int>())).Returns(new Employee());
-            var result = _employeesController.Delete(It.IsAny<int>()) as ViewResult;
+            var result = _employeesController.Delete(It.IsAny<int>());
             Assert.That(result, Is.TypeOf<ViewResult>());
         }
 
